@@ -1,0 +1,143 @@
+{
+  "type": "mealy",
+  "states": [
+    {
+      "name": "1",
+      "transitions": {
+        "a": {
+          "nextState": "4",
+          "output": "1"
+        },
+        "b": {
+          "nextState": "2",
+          "output": "2"
+        },
+        "c": {
+          "nextState": "5",
+          "output": "1"
+        }
+      }
+    },
+    {
+      "name": "2",
+      "transitions": {
+        "a": {
+          "nextState": "5",
+          "output": "2"
+        },
+        "b": {
+          "nextState": "1",
+          "output": "1"
+        },
+        "c": {
+          "nextState": "4",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "name": "3",
+      "transitions": {
+        "a": {
+          "nextState": "3",
+          "output": "2"
+        },
+        "b": {
+          "nextState": "5",
+          "output": "1"
+        },
+        "c": {
+          "nextState": "4",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "name": "4",
+      "transitions": {
+        "a": {
+          "nextState": "5",
+          "output": "1"
+        },
+        "b": {
+          "nextState": "8",
+          "output": "2"
+        },
+        "c": {
+          "nextState": "4",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "name": "5",
+      "transitions": {
+        "a": {
+          "nextState": "7",
+          "output": "1"
+        },
+        "b": {
+          "nextState": "2",
+          "output": "2"
+        },
+        "c": {
+          "nextState": "1",
+          "output": "1"
+        }
+      }
+    },
+    {
+      "name": "6",
+      "transitions": {
+        "a": {
+          "nextState": "1",
+          "output": "1"
+        },
+        "b": {
+          "nextState": "3",
+          "output": "2"
+        },
+        "c": {
+          "nextState": "4",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "name": "7",
+      "transitions": {
+        "a": {
+          "nextState": "5",
+          "output": "1"
+        },
+        "b": {
+          "nextState": "3",
+          "output": "2"
+        },
+        "c": {
+          "nextState": "7",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "name": "8",
+      "transitions": {
+        "a": {
+          "nextState": "3",
+          "output": "2"
+        },
+        "b": {
+          "nextState": "5",
+          "output": "1"
+        },
+        "c": {
+          "nextState": "6",
+          "output": "2"
+        }
+      }
+    }
+  ],
+  "inputs": ["Z1", "Z2"],
+  "outputs": ["Y1", "Y2", "Y3"]
+}

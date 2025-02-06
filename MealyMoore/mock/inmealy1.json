@@ -1,0 +1,163 @@
+{
+  "type": "mealy",
+  "states": [
+    {
+      "name": "S1",
+      "transitions": {
+        "Z1": {
+          "nextState": "S10",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "S5",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "S2",
+      "transitions": {
+        "Z1": {
+          "nextState": "S12",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "S8",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "S3",
+      "transitions": {
+        "Z1": {
+          "nextState": "S5",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S6",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S4",
+      "transitions": {
+        "Z1": {
+          "nextState": "S7",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S11",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S5",
+      "transitions": {
+        "Z1": {
+          "nextState": "S3",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "S9",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "S6",
+      "transitions": {
+        "Z1": {
+          "nextState": "S7",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S11",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S7",
+      "transitions": {
+        "Z1": {
+          "nextState": "S3",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "S6",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "S8",
+      "transitions": {
+        "Z1": {
+          "nextState": "S10",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "S4",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "S9",
+      "transitions": {
+        "Z1": {
+          "nextState": "S7",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S6",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S10",
+      "transitions": {
+        "Z1": {
+          "nextState": "S1",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S8",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S11",
+      "transitions": {
+        "Z1": {
+          "nextState": "S5",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S9",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "S12",
+      "transitions": {
+        "Z1": {
+          "nextState": "S2",
+          "output": "Y2"
+        },
+        "Z2": {
+          "nextState": "S8",
+          "output": "Y1"
+        }
+      }
+    }
+  ],
+  "inputs": ["Z1", "Z2"],
+  "outputs": ["Y1", "Y2", "Y3"]
+}

@@ -1,0 +1,59 @@
+{
+  "type": "mealy",
+  "states": [
+    {
+      "name": "S0",
+      "transitions": {
+        "x1": {
+          "nextState": "S1",
+          "output": "y1"
+        },
+        "x2": {
+          "nextState": "S2",
+          "output": "y2"
+        }
+      }
+    },
+    {
+      "name": "S1",
+      "transitions": {
+        "x1": {
+          "nextState": "S0",
+          "output": "y2"
+        },
+        "x2": {
+          "nextState": "S2",
+          "output": "y2"
+        }
+      }
+    },
+    {
+      "name": "S2",
+      "transitions": {
+        "x1": {
+          "nextState": "S1",
+          "output": "y1"
+        },
+        "x2": {
+          "nextState": "S3",
+          "output": "y1"
+        }
+      }
+    },
+    {
+      "name": "S3",
+      "transitions": {
+        "x1": {
+          "nextState": "S0",
+          "output": "y1"
+        },
+        "x2": {
+          "nextState": "S1",
+          "output": "y2"
+        }
+      }
+    }
+  ],
+  "inputs": ["input1", "input2"],
+  "outputs": ["W1", "W2", "W3"]
+}

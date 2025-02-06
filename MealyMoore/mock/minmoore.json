@@ -1,0 +1,63 @@
+{
+  "type": "moore",
+  "states": [
+    {
+      "name": "a1",
+      "output": "Y1",
+      "transitions": {
+        "1": "a5",
+        "2": "a7"
+      }
+    },
+    {
+      "name": "a2",
+      "output": "Y2",
+      "transitions": {
+        "1": "a4",
+        "2": "a1"
+      }
+    },
+    {
+      "name": "a3",
+      "output": "Y3",
+      "transitions": {
+        "1": "a5",
+        "2": "a4"
+      }
+    },
+    {
+      "name": "a4",
+      "output": "Y1",
+      "transitions": {
+        "1": "a3",
+        "2": "a2"
+      }
+    },
+    {
+      "name": "a5",
+      "output": "Y2",
+      "transitions": {
+        "1": "a4",
+        "2": "a1"
+      }
+    },
+    {
+      "name": "a6",
+      "output": "Y2",
+      "transitions": {
+        "1": "a2",
+        "2": "a3"
+      }
+    },
+    {
+      "name": "a7",
+      "output": "Y3",
+      "transitions": {
+        "1": "a5",
+        "2": "a4"
+      }
+    }
+  ],
+  "inputs": ["1", "2"],
+  "outputs": ["Y1", "Y2", "Y3"]
+}

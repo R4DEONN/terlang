@@ -1,0 +1,4 @@
+Z -> vA | sB | sC | *
+A -> vA | vZ
+B -> xB | tZ
+C -> xC

@@ -1,0 +1,109 @@
+{
+  "type": "mealy",
+  "states": [
+    {
+      "name": "1",
+      "transitions": {
+        "0": {
+          "nextState": "4",
+          "output": "1"
+        },
+        "1": {
+          "nextState": "6",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "1",
+          "output": "0"
+        }
+      }
+    },
+    {
+      "name": "2",
+      "transitions": {
+        "0": {
+          "nextState": "2",
+          "output": "0"
+        },
+        "1": {
+          "nextState": "2",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "6",
+          "output": "1"
+        }
+      }
+    },
+    {
+      "name": "3",
+      "transitions": {
+        "0": {
+          "nextState": "4",
+          "output": "1"
+        },
+        "1": {
+          "nextState": "2",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "3",
+          "output": "0"
+        }
+      }
+    },
+    {
+      "name": "4",
+      "transitions": {
+        "0": {
+          "nextState": "4",
+          "output": "1"
+        },
+        "1": {
+          "nextState": "3",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "3",
+          "output": "0"
+        }
+      }
+    },
+    {
+      "name": "5",
+      "transitions": {
+        "0": {
+          "nextState": "6",
+          "output": "0"
+        },
+        "1": {
+          "nextState": "6",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "5",
+          "output": "1"
+        }
+      }
+    },
+    {
+      "name": "6",
+      "transitions": {
+        "0": {
+          "nextState": "5",
+          "output": "0"
+        },
+        "1": {
+          "nextState": "6",
+          "output": "0"
+        },
+        "2": {
+          "nextState": "2",
+          "output": "1"
+        }
+      }
+    }
+  ],
+  "inputs": ["Z1", "Z2"],
+  "outputs": ["Y1", "Y2", "Y3"]
+}

@@ -1,0 +1,85 @@
+{
+  "type": "mealy",
+  "states": [
+    {
+      "name": "1",
+      "transitions": {
+        "Z1": {
+          "nextState": "3",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "5",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "2",
+      "transitions": {
+        "Z1": {
+          "nextState": "4",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "6",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "3",
+      "transitions": {
+        "Z1": {
+          "nextState": "3",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "5",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "4",
+      "transitions": {
+        "Z1": {
+          "nextState": "4",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "6",
+          "output": "Y2"
+        }
+      }
+    },
+    {
+      "name": "5",
+      "transitions": {
+        "Z1": {
+          "nextState": "1",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "3",
+          "output": "Y1"
+        }
+      }
+    },
+    {
+      "name": "6",
+      "transitions": {
+        "Z1": {
+          "nextState": "2",
+          "output": "Y1"
+        },
+        "Z2": {
+          "nextState": "4",
+          "output": "Y1"
+        }
+      }
+    }
+  ],
+  "inputs": ["Z1", "Z2"],
+  "outputs": ["Y1", "Y2"]
+}

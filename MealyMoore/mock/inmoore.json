@@ -1,0 +1,22 @@
+{
+  "type": "moore",
+  "states": {
+    "S1_W3": {
+      "output": "W3",
+      "transitions": {
+        "input1": "S2_W1",
+        "input2": "S3_W2"
+      }
+    },
+    "S2_W1": {
+      "output": "W1",
+      "transitions": {
+        "input1": "S1_W3"
+      }
+    },
+    "S3_W2": {
+      "output": "W2",
+      "transitions": {}
+    }
+  }
+}
