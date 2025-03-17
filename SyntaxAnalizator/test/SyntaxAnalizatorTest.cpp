@@ -45,6 +45,22 @@ TEST_CASE("Positive")
 		SyntaxAnalizator().ScanExpression(input, output);
 		REQUIRE(output.str() == "OK\n");
 	}
+
+	SECTION("Hard3")
+	{
+		std::stringstream output;
+		input << "x + (x + + y)";
+		SyntaxAnalizator().ScanExpression(input, output);
+		REQUIRE(output.str() == "OK\n");
+	}
+
+	SECTION("Hard4")
+	{
+		std::stringstream output;
+		input << "- ( - 5 - 5 + 5) - 5 * -5.0e+10";
+		SyntaxAnalizator().ScanExpression(input, output);
+		REQUIRE(output.str() == "OK\n");
+	}
 }
 
 TEST_CASE("Negative")

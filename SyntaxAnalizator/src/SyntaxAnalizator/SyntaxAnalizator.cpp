@@ -27,6 +27,8 @@ bool SyntaxAnalizator::IsExpression()
 			{
 				return true;
 			}
+
+			m_errorStack.push(Error::MISSING_EXPRESSION);
 			return false;
 		}
 		return true;

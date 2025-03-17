@@ -6,6 +6,7 @@
 enum class Error
 {
 	MISSING_IDENTIFIER,
+	MISSING_EXPRESSION,
 	MISSING_CLOSING_BRACKET,
 };
 
@@ -25,6 +26,7 @@ private:
 	bool IsListInd();
 	bool IsListExp();
 	bool IsIdentifier();
+
 	bool IsTokensEnd();
 
 	Lexer m_lexer;

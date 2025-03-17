@@ -34,10 +34,13 @@ void Lexer::ScanInput(std::istream& input)
 			{
 				pos = i + 1;
 			}
-			else if (IsOperation(lexem[lexem.size() - 1]) && (lexem[lexem.size() - 2] != 'e' && lexem[lexem.size() - 2] != 'E') && !IsOperation(line[i]) && m_state == LexerState::DEFAULT)
+			else if (IsOperation(lexem[lexem.size() - 1]) && !IsOperation(line[i]) && m_state == LexerState::DEFAULT)
 			{
-				PushToken(lexem, row, pos);
-				pos = i + 1;
+				if (lexem.size() == 1 || (lexem.size() > 1 && lexem[lexem.size() - 2] != 'e' && lexem[lexem.size() - 2] != 'E'))
+				{
+					PushToken(lexem, row, pos);
+					pos = i + 1;
+				}
 			}
 
 
@@ -75,9 +78,9 @@ void Lexer::ScanInput(std::istream& input)
 				}
 			}
 
-			if (IsOperation(line[i]) && !IsOperation(lexem[lexem.size() - 1]) && m_state == LexerState::DEFAULT)
+			if (!lexem.empty() && IsOperation(line[i]) && !IsOperation(lexem[lexem.size() - 1]) && m_state == LexerState::DEFAULT)
 			{
-				if (i == 0 || (line[i - 1] != 'e' && line[i - 1] != 'E'))
+				if (i == 0 || (lexem[lexem.size() - 1] != 'e' && lexem[lexem.size() - 1] != 'E'))
 				{
 					PushToken(lexem, row, pos);
 				}
