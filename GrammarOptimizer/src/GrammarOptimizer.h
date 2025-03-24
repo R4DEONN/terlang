@@ -8,6 +8,13 @@ namespace GrammarOptimizer
 	void Optimize(std::istream& input, std::ostream& output)
 	{
 		auto dictionary = CreateDictionaryFromInput(input);
+		if (!dictionary.CheckValidGrammar())
+		{
+//			throw std::invalid_argument("Wrong grammar");
+		}
+		dictionary.RemoveLeftRecursion();
+ 		dictionary.Factorize();
+
 		auto firstStar = dictionary.ComputeFirstStar();
 
 		for (const auto& nonTerminal : dictionary.GetNonTerminals())

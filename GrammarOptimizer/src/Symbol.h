@@ -57,7 +57,12 @@ public:
 		}
 	}
 
-	[[nodiscard]] const Rules& GetRules() const
+	void ClearRules()
+	{
+		m_rules.clear(); // Очищаем все правила
+	}
+
+	[[nodiscard]] Rules& GetRules()
 	{
 		return m_rules;
 	}
