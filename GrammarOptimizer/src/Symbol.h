@@ -59,7 +59,7 @@ public:
 
 	void ClearRules()
 	{
-		m_rules.clear(); // Очищаем все правила
+		m_rules.clear();
 	}
 
 	[[nodiscard]] Rules& GetRules()

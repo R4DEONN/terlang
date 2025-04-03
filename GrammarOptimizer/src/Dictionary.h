@@ -72,6 +72,7 @@ public:
 
 	void RemoveLeftRecursion()
 	{
+		std::vector<std::shared_ptr<NonTerminal>> vectorToCreate;
 		for (const auto& nonTerminal: m_nonTerminals)
 		{
 			bool isCreated = false;
@@ -87,7 +88,8 @@ public:
 					if (!isCreated)
 					{
 						isCreated = true;
-						Add(newNonTerminal);
+						vectorToCreate.push_back(newNonTerminal);
+//						Add(newNonTerminal);
 					}
 
 					auto newRule = Rule(rule.size() - 1);
@@ -122,8 +124,12 @@ public:
 
 				rules.push_back(newRule);
 			}
-
 		}
+
+		std::for_each(vectorToCreate.begin(), vectorToCreate.end(), [&](const auto& item)
+		{
+			Add(item);
+		});
 	}
 
 	[[nodiscard]] const std::vector<std::shared_ptr<NonTerminal>>& GetNonTerminals() const
@@ -143,7 +149,6 @@ public:
 
 	std::unordered_map<std::string, std::set<std::string>> ComputeFirstStar() const
 	{
-		// Шаг 1: Создание матрицы смежности
 		size_t size = m_nonTerminals.size();
 		std::vector<std::vector<bool>> adjacencyMatrix(size, std::vector<bool>(size, false));
 
@@ -217,10 +222,84 @@ public:
 					}
 				}
 			}
-		}
-		while (isChanged);
+		} while (isChanged);
 
 		return firstStar;
+	}
+
+	std::unordered_map<std::string, std::set<std::string>> ComputeFollow(
+		const std::unordered_map<std::string, std::set<std::string>>& firstStar) const
+	{
+		std::unordered_map<std::string, std::set<std::string>> followSets;
+
+		if (m_nonTerminals.empty())
+		{
+			return followSets;
+		}
+
+		bool isChanged;
+		do
+		{
+			isChanged = false;
+
+			for (const auto& nonTerminal : m_nonTerminals)
+			{
+				const std::string& A = nonTerminal->GetValue();
+				for (const auto& rule : nonTerminal->GetRules())
+				{
+					for (size_t i = 0; i < rule.size(); ++i)
+					{
+						auto symbol = rule[i];
+						if (symbol->GetType() == SYMBOL_TYPE::NON_TERMINAL)
+						{
+							std::string B = symbol->GetValue();
+
+							// Если после B есть символы
+							if (i + 1 < rule.size())
+							{
+								auto nextSymbol = rule[i + 1];
+
+								// Если следующий символ - терминал, добавляем его в FOLLOW(B)
+								if (nextSymbol->GetType() == SYMBOL_TYPE::TERMINAL)
+								{
+									if (followSets[B].insert(nextSymbol->GetValue()).second)
+										isChanged = true;
+								}
+									// Если следующий символ - нетерминал, добавляем FIRST(nextSymbol) в FOLLOW(B)
+								else
+								{
+									for (const auto& terminal : firstStar.at(nextSymbol->GetValue()))
+									{
+										if (terminal != "e" && followSets[B].insert(terminal).second)
+											isChanged = true;
+									}
+
+									// Если FIRST(nextSymbol) содержит ε, добавляем FOLLOW(A) в FOLLOW(B)
+									if (firstStar.at(nextSymbol->GetValue()).count("e"))
+									{
+										for (const auto& terminal : followSets[A])
+										{
+											if (followSets[B].insert(terminal).second)
+												isChanged = true;
+										}
+									}
+								}
+							}
+							else // Если B последний в правиле, добавляем FOLLOW(A) в FOLLOW(B)
+							{
+								for (const auto& terminal : followSets[A])
+								{
+									if (followSets[B].insert(terminal).second)
+										isChanged = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		} while (isChanged);
+
+		return followSets;
 	}
 
 	void Factorize()
@@ -239,15 +318,13 @@ public:
 					auto& rules = nonTerminal->GetRules();
 					std::unordered_map<std::string, std::vector<Rule>> groups;
 
-					// Группируем правила по первому символу
 					for (const auto& rule: rules)
 					{
-						if (rule.empty()) continue; // Пропускаем пустые правила
+						if (rule.empty()) continue;
 						auto firstSymbol = rule[0];
 						groups[firstSymbol->GetValue()].push_back(rule);
 					}
 
-					// Обрабатываем каждую группу
 					for (auto it = groups.begin(); it != groups.end();)
 					{
 						auto& group = it->second;
@@ -257,7 +334,6 @@ public:
 							continue;
 						}
 
-						// Находим максимальный общий префикс
 						size_t prefixLength = 0;
 						size_t minLen = std::numeric_limits<size_t>::max();
 						for (const auto& r: group)
@@ -293,7 +369,6 @@ public:
 							continue;
 						}
 
-						// Создаем уникальное имя для нового нетерминала
 						std::string baseName = addSuffixBeforeClosingBracket(nonTerminal->GetValue(), SALT);
 						std::string newName = baseName;
 						int counter = 1;
@@ -312,7 +387,6 @@ public:
 						auto newNonTerminal = std::make_shared<NonTerminal>(newName);
 						nonTerminalsToAdd.push_back(newNonTerminal);
 
-						// Формируем новое правило для исходного нетерминала
 						Rule newRule;
 						for (size_t i = 0; i < prefixLength; ++i)
 						{
@@ -321,7 +395,6 @@ public:
 						newRule.push_back(newNonTerminal);
 						nonTerminal->AddRule(newRule);
 
-						// Добавляем суффиксы в новый нетерминал
 						for (const auto& oldRule: group)
 						{
 							Rule suffix;
@@ -336,7 +409,6 @@ public:
 							newNonTerminal->AddRule(suffix);
 						}
 
-						// Удаляем старые правила из исходного нетерминала
 						for (auto itRule = rules.begin(); itRule != rules.end();)
 						{
 							if (std::find(group.begin(), group.end(), *itRule) != group.end())
@@ -351,7 +423,7 @@ public:
 
 						localChanged = true;
 						globalChanged = true;
-						it = groups.erase(it); // Удаляем обработанную группу
+						it = groups.erase(it);
 					}
 				} while (localChanged);
 			}
@@ -374,7 +446,7 @@ Dictionary CreateDictionaryFromInput(std::istream& input)
 	Dictionary dictionary;
 	std::string row;
 
-	std::regex ruleRegex(R"((<[^>]+>)\s*->\s*((?:<[^>]+>|[^<>])+))");
+	std::regex ruleRegex(R"((<[^>]+>)\s*->\s*(.+))");
 	std::smatch matches;
 
 	while (std::getline(input, row))
@@ -402,7 +474,7 @@ Dictionary CreateDictionaryFromInput(std::istream& input)
 				nonTerminalPtr = *nonTerminalIt;
 			}
 
-			std::regex symbolRegex(R"(<[^>]+>|[^<>])");
+			std::regex symbolRegex(R"(<[^>]*>?|[^<])");
 			std::vector<std::shared_ptr<Symbol>> ruleSymbols;
 
 			for (std::sregex_iterator it(right.begin(), right.end(), symbolRegex), end; it != end; ++it)
